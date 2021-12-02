@@ -15,7 +15,6 @@ public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-
     @Override
     public Iterable<User> findAll() {
         return userRepository.findAll();

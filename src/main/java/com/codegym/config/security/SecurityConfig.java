@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -88,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             admin.setPassword(passwordEncoder.encode("123456"));
             admin.setEmail("admin@gmail.com");
             admin.setRoles(roles);
+            admin.setStatus(true);
             userService.save(admin);
         }
     }
@@ -102,7 +102,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
-                .antMatchers("/register","/", "/login").permitAll()
+                .antMatchers("/", "/register", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
