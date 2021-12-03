@@ -47,7 +47,7 @@ public class UserRestController {
     }
 
     // Sửa information
-    @PutMapping("/{id}")
+    @PutMapping("/update-information/{id}")
     public ResponseEntity<User> updateProfile(@Validated @PathVariable Long id, @RequestBody  User user, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,7 +72,7 @@ public class UserRestController {
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
 
-    @PutMapping("/update-information/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<User> changePassWord(@PathVariable Long id, @RequestBody LoginForm passNew ) {
 
         Optional<User> userOptional = userService.findById(id);
