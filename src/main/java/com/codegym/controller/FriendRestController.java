@@ -10,10 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-
 @RestController
 @CrossOrigin("*")
-@RequestMapping("friends")
+@RequestMapping("/friends")
 public class FriendRestController {
     @Autowired
     private IFriendService friendService;
@@ -54,4 +53,9 @@ public class FriendRestController {
         return new ResponseEntity<>(friendOptional.get(), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<Friend>> getAllFriend(@RequestParam("userId") Long userId) {
+        return new ResponseEntity<>(friendService.getAllListFriend(userId), HttpStatus.OK);
+    }
 }
+

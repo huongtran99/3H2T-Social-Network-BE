@@ -3,12 +3,13 @@ package com.codegym.service.friend;
 import com.codegym.model.entity.Friend;
 import com.codegym.repository.IFriendRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class FriendService implements IFriendService {
+public class FriendService implements IFriendService{
     @Autowired
     private IFriendRepository friendRepository;
 
@@ -30,6 +31,12 @@ public class FriendService implements IFriendService {
     @Override
     public void remove(Long id) {
         friendRepository.deleteById(id);
+
+    }
+
+    @Override
+    public Iterable<Friend> getAllListFriend(Long userId) {
+        return friendRepository.getAllListFriend(userId);
     }
 
     @Override
