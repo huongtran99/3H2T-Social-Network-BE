@@ -11,7 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 public class UserForm {
-    @NotNull
+
     private Long id;
 
     @NotEmpty
