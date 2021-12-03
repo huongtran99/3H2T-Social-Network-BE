@@ -33,7 +33,7 @@ public class User {
     @Column(columnDefinition = "varchar(255) default '/images/default-cover.png'")
     private String cover;
 
-    @Column(columnDefinition = "boolean default 1")
+    @Column(columnDefinition = "boolean default true")
     private boolean status;
 
     @ManyToMany (fetch = FetchType.EAGER)

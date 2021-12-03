@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class FriendService implements IFriendService{
-
     @Autowired
     private IFriendRepository friendRepository;
 
@@ -37,5 +37,10 @@ public class FriendService implements IFriendService{
     @Override
     public Iterable<Friend> getAllListFriend(Long userId) {
         return friendRepository.getAllListFriend(userId);
+    }
+
+    @Override
+    public Optional<Friend> findFriendBySenderAndReceiver(Long senderId, Long receiverId) {
+        return friendRepository.findFriendBySenderAndReceiver(senderId, receiverId);
     }
 }
