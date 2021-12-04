@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.model.dto.FileForm;
 import com.codegym.model.entity.File;
+import com.codegym.model.entity.Post;
 import com.codegym.service.file.IFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,14 @@ public class FileRestController {
     @GetMapping
     public ResponseEntity<Iterable<File>> findAll() {
         return new ResponseEntity<>(fileService.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/postId")
+    public ResponseEntity<Iterable<File>> findFileByPostId(@RequestBody Post post) {
+        if (post == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(fileService.findFileByPostId(post.getId()), HttpStatus.OK);
     }
 
     @PostMapping

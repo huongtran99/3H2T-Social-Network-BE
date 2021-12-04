@@ -31,4 +31,9 @@ public class FileService implements IFileService {
     public void remove(Long id) {
         fileRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<File> findFileByPostId(Long id) {
+        return fileRepository.findFileByPostId(id);
+    }
 }

@@ -20,16 +20,16 @@ public class PostRestController {
     @Autowired
     private IPostService postService;
 
-//    @GetMapping
-//    public ResponseEntity<Iterable<Post>> findAll() {
-//        Iterable<Post> postIterable = postService.findAll();
-//        return new ResponseEntity<>(postIterable, HttpStatus.OK);
-//    }
-
     @GetMapping
     public ResponseEntity<Page<Post>> findAll(@PageableDefault(size = 3) Pageable pageable) {
-        Page<Post> postPage = postService.findAll(pageable);
+        Page<Post> postPage = postService.findAllOrderByDateTime(pageable);
         return new ResponseEntity<>(postPage, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Page<Post>> findAllByUser(@PathVariable Long id, @PageableDefault(size = 3) Pageable pageable) {
+        Page<Post> posts = postService.findAllByUserOrderByDateTime(id, pageable);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -58,6 +58,7 @@ public class PostRestController {
             Date date = new Date(millis);
             post.setId(postOptional.get().getId());
             post.setDateTime(date);
+            post.setUser(postOptional.get().getUser());
             return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

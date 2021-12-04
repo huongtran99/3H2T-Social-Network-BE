@@ -7,4 +7,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface IPostService extends IGeneralService<Post> {
     Page<Post> findAll(Pageable pageable);
+
+    Page<Post> findAllOrderByDateTime(Pageable pageable);
+
+    Page<Post> findAllByUserOrderByDateTime(Long id, Pageable pageable);
 }

@@ -38,4 +38,14 @@ public class PostService implements IPostService {
     public Page<Post> findAll(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Post> findAllOrderByDateTime(Pageable pageable) {
+        return postRepository.findAllOrderByDateTime(pageable);
+    }
+
+    @Override
+    public Page<Post> findAllByUserOrderByDateTime(Long id, Pageable pageable) {
+        return postRepository.findAllByUserOrderByDateTime(id, pageable);
+    }
 }
