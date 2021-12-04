@@ -66,7 +66,7 @@ public class PostRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Post> deletePostById(@RequestBody Post post, @PathVariable Long id) {
+    public ResponseEntity<Post> deletePostById(@PathVariable Long id) {
         Optional<Post> postOptional = postService.findById(id);
         if (postOptional.isPresent()) {
             postService.remove(id);

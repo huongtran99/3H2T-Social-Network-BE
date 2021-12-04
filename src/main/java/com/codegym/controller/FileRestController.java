@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -56,5 +57,16 @@ public class FileRestController {
             fileService.save(newFile);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<File> deleteFileById(@PathVariable Long id) {
+        Optional<File> fileOptional = fileService.findById(id);
+        if (fileOptional.isPresent()) {
+            fileService.remove(id);
+            return new ResponseEntity<>(fileOptional.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
