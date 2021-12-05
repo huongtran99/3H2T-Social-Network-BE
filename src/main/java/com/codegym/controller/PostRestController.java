@@ -51,7 +51,7 @@ public class PostRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> editPostById(@RequestBody Post post, @PathVariable Long id) {
+    public ResponseEntity<Post> editPostById(@PathVariable Long id, @RequestBody Post post) {
         Optional<Post> postOptional = postService.findById(id);
         if (postOptional.isPresent()) {
             long millis = System.currentTimeMillis();
