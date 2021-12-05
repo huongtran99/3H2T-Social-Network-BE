@@ -4,4 +4,5 @@ import com.codegym.model.entity.Notification;
 import com.codegym.service.IGeneralService;
 
 public interface INotificationService extends IGeneralService<Notification> {
+    Iterable<Notification> getNotificationByUserId(Long id);
 }

@@ -14,5 +14,8 @@ public class Notification {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private User sender;
+
     private String content;
 }

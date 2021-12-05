@@ -15,4 +15,5 @@ public interface IFriendRepository extends JpaRepository<Friend, Long> {
 
     @Query(value = "select * from friend where sender_id = ? and receiver_id = ?", nativeQuery = true)
     Optional<Friend> findFriendBySenderAndReceiver(Long senderId, Long receiverId);
+
 }
