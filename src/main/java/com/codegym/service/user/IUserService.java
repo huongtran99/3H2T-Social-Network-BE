@@ -8,4 +8,6 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
     User findByUsername(String username);
 
     User findByEmail(String email);
+
+    Iterable<User> findAllUser(Long id, Long senderId);
 }

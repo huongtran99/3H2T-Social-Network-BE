@@ -18,4 +18,9 @@ public class NotificationRestController {
     public ResponseEntity<Notification> addNotification(@RequestBody Notification notification) {
         return new ResponseEntity<>(notificationService.save(notification), HttpStatus.OK);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Iterable<Notification>> getNotification(@PathVariable Long id) {
+        return new ResponseEntity<>(notificationService.getNotificationByUserId(id), HttpStatus.OK);
+    }
 }

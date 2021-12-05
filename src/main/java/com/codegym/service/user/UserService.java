@@ -46,6 +46,12 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Iterable<User> findAllUser(Long id, Long senderId) {
+        return userRepository.findAllUser(id, senderId);
+    }
+
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);

@@ -27,5 +27,13 @@ public class UserRestController {
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("get")
+    public ResponseEntity<Iterable<User>> getAllUserByUserId(@RequestBody User user) {
+        if(user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userService.findAllUser(user.getId(), user.getId()), HttpStatus.OK);
+    }
+
 
 }

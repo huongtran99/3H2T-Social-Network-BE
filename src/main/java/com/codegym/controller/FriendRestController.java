@@ -44,9 +44,27 @@ public class FriendRestController {
         return new ResponseEntity<>(friendService.save(friendOptional.get()), HttpStatus.OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Friend> getFriendSender(@PathVariable Long id, @RequestParam(name = "senderId") Long senderId) {
+        Optional<Friend> friendOptional = friendService.findFriendBySenderAndReceiver(senderId, id);
+        if (!friendOptional.isPresent()) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(friendOptional.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("status/{id}")
+    public ResponseEntity<Boolean> getStatus(@PathVariable Long id, @RequestParam(name = "receiver") Long receiver) {
+        Optional<Friend> friendOptional = friendService.findFriendBySenderAndReceiver(id, receiver);
+        if (!friendOptional.isPresent()) {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Friend> deleteFriend(@PathVariable Long id, User user) {
-        Optional<Friend> friendOptional = friendService.findFriendBySenderAndReceiver(id, user.getId());
+    public ResponseEntity<Friend> deleteFriend(@PathVariable Long id, @RequestParam(name = "senderId") Long senderId) {
+        Optional<Friend> friendOptional = friendService.findFriendBySenderAndReceiver(senderId, id);
         if (!friendOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
