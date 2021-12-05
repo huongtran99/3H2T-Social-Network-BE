@@ -3,10 +3,14 @@ package com.codegym.controller;
 import com.codegym.model.dto.UserForm;
 import com.codegym.model.dto.LoginForm;
 import com.codegym.model.dto.RegistrationForm;
+import com.codegym.model.entity.Post;
 import com.codegym.model.entity.User;
 import com.codegym.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,8 +40,9 @@ public class UserRestController {
     private String fileUpload;
 
     @GetMapping
-    public ResponseEntity<Iterable<User>> showAll() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<Page<User>> findAll(@PageableDefault(size = 5) Pageable pageable) {
+        Page<User> users = userService.findAll(pageable);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -46,8 +51,20 @@ public class UserRestController {
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<User> changePassWord(@PathVariable Long id, @RequestBody LoginForm passNew ) {
+
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userOptional.get().setPassword(passwordEncoder.encode(passNew.getPassword()));
+        userService.save(userOptional.get());
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+    }
+
     // Sửa information
-    @PutMapping("/{id}")
+    @PutMapping("/update-information/{id}")
     public ResponseEntity<User> updateProfile(@Validated @PathVariable Long id, @RequestBody  User user, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,17 +89,6 @@ public class UserRestController {
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
 
-    @PutMapping("/update-information/{id}")
-    public ResponseEntity<User> changePassWord(@PathVariable Long id, @RequestBody LoginForm passNew ) {
-
-        Optional<User> userOptional = userService.findById(id);
-        if (!userOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        userOptional.get().setPassword(passwordEncoder.encode(passNew.getPassword()));
-        userService.save(userOptional.get());
-        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
-    }
     @PutMapping("/update-cover/{id}")
     public ResponseEntity<User> updateCover(@Validated @PathVariable Long id, UserForm userForm, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -146,44 +152,4 @@ public class UserRestController {
         user1.setAvatar(fileName);
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser(@Validated @PathVariable Long id, UserForm userForm, BindingResult bindingResult) {
-//        if (bindingResult.hasFieldErrors()) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//        Optional<User> userOptional = userService.findById(id);
-//        if (!userOptional.isPresent()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        User user1 = new User();
-//        user1.setId(id);
-//        user1.setUsername(userOptional.get().getUsername());
-//        user1.setEmail(userForm.getEmail());
-//        user1.setPhone(userForm.getPhone());
-//        user1.setBirthday(userForm.getBirthday());
-//        user1.setGender(userForm.getGender());
-//        user1.setStatus(userOptional.get().isStatus());
-//        user1.setRoles(userOptional.get().getRoles());
-//
-//        MultipartFile multipartFile = userForm.getAvatar();
-//        String fileName = multipartFile.getOriginalFilename();
-//        try {
-//            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        MultipartFile multipartFile1 = userForm.getCover();
-//        String fileName1 = multipartFile1.getOriginalFilename();
-//        try {
-//            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName1));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        user1.setAvatar(fileName);
-//        user1.setCover(fileName1);
-//        return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
-//    }
 }
