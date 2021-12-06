@@ -75,5 +75,11 @@ public class FriendRestController {
     public ResponseEntity<Iterable<Friend>> getAllFriend(@RequestParam("userId") Long userId) {
         return new ResponseEntity<>(friendService.getAllListFriend(userId), HttpStatus.OK);
     }
+
+    @GetMapping("/mutual")
+    public ResponseEntity<Iterable<Long>> getMutualFriend(@RequestParam("userId1") Long userId1,
+                                                            @RequestParam("userId2") Long userId2) {
+        return new ResponseEntity<>(friendService.getMutualFriend(userId1, userId2), HttpStatus.OK);
+    }
 }
 

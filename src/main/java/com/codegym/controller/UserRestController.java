@@ -37,6 +37,11 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/role")
+    public ResponseEntity<?> showAllUserHasRole() {
+        return new ResponseEntity<>(userService.getAllUserHasRoleUser(), HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         Optional<User> userOptional = userService.findById(id);
@@ -68,7 +73,7 @@ public class UserRestController {
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> changePassWord(@PathVariable Long id, @RequestBody LoginForm passNew) {
         Optional<User> userOptional = userService.findById(id);
         if (!userOptional.isPresent()) {

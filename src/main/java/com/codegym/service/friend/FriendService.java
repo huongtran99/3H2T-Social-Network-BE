@@ -31,7 +31,6 @@ public class FriendService implements IFriendService{
     @Override
     public void remove(Long id) {
         friendRepository.deleteById(id);
-
     }
 
     @Override
@@ -42,5 +41,10 @@ public class FriendService implements IFriendService{
     @Override
     public Optional<Friend> findFriendBySenderAndReceiver(Long senderId, Long receiverId) {
         return friendRepository.findFriendBySenderAndReceiver(senderId, receiverId);
+    }
+
+    @Override
+    public Iterable<Long> getMutualFriend(Long userId1, Long userId2) {
+        return friendRepository.getMutualFriend(userId1, userId2);
     }
 }
