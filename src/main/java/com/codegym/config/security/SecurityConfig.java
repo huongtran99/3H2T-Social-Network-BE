@@ -1,4 +1,4 @@
-package com.codegym.config.websocket.security;
+package com.codegym.config.security;
 
 import com.codegym.config.custom.CustomAccessDeniedHandler;
 import com.codegym.config.custom.RestAuthenticationEntryPoint;
