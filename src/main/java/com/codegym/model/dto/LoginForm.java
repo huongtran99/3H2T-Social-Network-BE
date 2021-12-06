@@ -1,5 +1,6 @@
 package com.codegym.model.dto;
 
+import com.codegym.model.entity.Regex;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -11,11 +12,11 @@ import javax.validation.constraints.Size;
 public class LoginForm {
     @NotEmpty
     @Size(min = 4, max = 20)
-    @Pattern(regexp = "^[a-zA-Z0-9]+([a-zA-Z0-9]([_\\\\-])[a-zA-Z0-9])*[a-zA-Z0-9]+${4,}", message = "* invalid username")
+    @Pattern(regexp = Regex.USER_REGEX, message = Regex.PASSWORD_MESSAGE)
     private String username;
 
     @NotEmpty
     @Size(min = 4, max = 20)
-    @Pattern(regexp = "^(?:(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*)[^\\s]{4,}$", message = "* invalid password")
+    @Pattern(regexp = Regex.PASSWORD_REGEX, message = Regex.PASSWORD_MESSAGE)
     private String password;
 }
