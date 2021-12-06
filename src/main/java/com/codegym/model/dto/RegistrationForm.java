@@ -30,7 +30,7 @@ public class RegistrationForm {
 
     @UniqueEmail
     @NotEmpty
-    @Pattern(regexp = Regex.EMAIL_REGEX, message = Regex.PASSWORD_MESSAGE)
+    @Pattern(regexp = Regex.EMAIL_REGEX, message = Regex.EMAIL_MESSAGE)
     private String email;
 
 }
