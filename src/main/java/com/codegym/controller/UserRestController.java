@@ -1,7 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.model.dto.UserForm;
-import com.codegym.model.dto.LoginForm;
+import com.codegym.model.entity.Regex;
 import com.codegym.model.entity.User;
 import com.codegym.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Pattern;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -73,15 +74,25 @@ public class UserRestController {
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> changePassWord(@PathVariable Long id, @RequestBody LoginForm passNew) {
+    @PutMapping("{id}")
+    public ResponseEntity<User> changePassWord(@PathVariable Long id, @Pattern(regexp = Regex.PASSWORD_REGEX) @RequestParam(name = "password") String passNew) {
         Optional<User> userOptional = userService.findById(id);
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        userOptional.get().setPassword(passwordEncoder.encode(passNew.getPassword()));
+        userOptional.get().setPassword(passwordEncoder.encode(passNew));
         userService.save(userOptional.get());
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getPasswordTrue/{id}")
+    public ResponseEntity<Boolean> getPasswordEndCoder(@PathVariable Long id, @RequestParam(name = "password") String password) {
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Boolean resultPassword = passwordEncoder.matches(password, userOptional.get().getPassword());
+        return new ResponseEntity<>(resultPassword, HttpStatus.OK);
     }
 
     @PutMapping("/update-cover/{id}")

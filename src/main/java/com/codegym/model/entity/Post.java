@@ -8,6 +8,8 @@ import java.util.Date;
 @Entity
 @Data
 public class Post {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
