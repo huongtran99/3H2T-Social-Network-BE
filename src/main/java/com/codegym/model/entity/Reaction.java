@@ -15,5 +15,8 @@ public class Reaction {
     private User user;
 
     @ManyToOne
+    private Post post;
+
+    @ManyToOne
     private Comment comment;
 }
