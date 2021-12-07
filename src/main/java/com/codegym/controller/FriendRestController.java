@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 @RestController
 @CrossOrigin("*")
@@ -77,9 +78,11 @@ public class FriendRestController {
     }
 
     @GetMapping("/mutual")
-    public ResponseEntity<Iterable<Long>> getMutualFriend(@RequestParam("userId1") Long userId1,
+    public ResponseEntity<Iterable<Friend>> getMutualFriend(@RequestParam("userId1") Long userId1,
                                                             @RequestParam("userId2") Long userId2) {
         return new ResponseEntity<>(friendService.getMutualFriend(userId1, userId2), HttpStatus.OK);
     }
+
+
 }
 

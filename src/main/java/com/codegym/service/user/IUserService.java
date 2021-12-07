@@ -17,4 +17,5 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
     Iterable<IUserChat> getAllUserHasRoleUser();
 
     IUserChat getUserChatInfo(Long id);
+
 }

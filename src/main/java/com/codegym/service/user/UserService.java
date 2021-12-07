@@ -4,6 +4,7 @@ import com.codegym.model.dto.UserPrincipal;
 import com.codegym.model.entity.User;
 import com.codegym.model.querry.IUserChat;
 import com.codegym.repository.IUserRepository;
+import com.codegym.service.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -73,4 +74,6 @@ public class UserService implements IUserService {
         User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);
     }
+
+
 }

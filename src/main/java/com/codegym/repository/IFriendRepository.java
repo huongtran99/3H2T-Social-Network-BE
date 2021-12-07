@@ -1,11 +1,13 @@
 package com.codegym.repository;
 
 import com.codegym.model.entity.Friend;
+import com.codegym.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +18,5 @@ public interface IFriendRepository extends JpaRepository<Friend, Long> {
     @Query(value = "select * from friend where sender_id = ? and receiver_id = ? ", nativeQuery = true)
     Optional<Friend> findFriendBySenderAndReceiver(Long senderId, Long receiverId);
 
-    @Query(value = "call social_network_3h2t.getMutualFriend(?1, ?2) ", nativeQuery = true)
-    Iterable<Long> getMutualFriend(Long userId1, Long userId2);
+
 }
