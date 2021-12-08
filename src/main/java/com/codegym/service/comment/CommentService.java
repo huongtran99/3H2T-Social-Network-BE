@@ -3,6 +3,8 @@ package com.codegym.service.comment;
 import com.codegym.model.entity.Comment;
 import com.codegym.repository.ICommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -34,7 +36,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Iterable<Comment> findCommentByPostId(Long id) {
-        return commentRepository.findCommentByPostId(id);
+    public Page<Comment> findCommentByPostId(Long id, Pageable pageable) {
+        return commentRepository.findCommentByPostId(id, pageable);
     }
 }
