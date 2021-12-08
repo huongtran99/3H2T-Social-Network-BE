@@ -11,4 +11,5 @@ public interface IPostService extends IGeneralService<Post> {
     Page<Post> findAllOrderByDateTime(Pageable pageable);
 
     Page<Post> findAllByUserOrderByDateTime(Long id, Pageable pageable);
+
 }
