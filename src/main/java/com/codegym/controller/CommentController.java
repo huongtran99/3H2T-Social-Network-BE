@@ -23,6 +23,9 @@ public class CommentController {
 
     @PostMapping()
     public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        comment.setDateTime(date);
         return new ResponseEntity<>(commentService.save(comment), HttpStatus.CREATED);
     }
 
@@ -35,10 +38,10 @@ public class CommentController {
     @GetMapping("{id}")
     public ResponseEntity<Comment> findCommentById(@PathVariable Long id) {
         Optional<Comment> commentOptional = commentService.findById(id);
-        if (commentOptional.isPresent()) {
+        if (!commentOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(commentOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(commentOptional.get(), HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{id}")
