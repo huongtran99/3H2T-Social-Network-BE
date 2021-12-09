@@ -19,13 +19,15 @@ public class UserForm {
 
     @NotEmpty
     @Email
+    @Pattern(regexp = "^[_A-Za-z0-9-\\\\+]+(\\\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\\\.[A-Za-z0-9]+)*(\\\\.[A-Za-z]{2,})$")
     private String email;
 
     @NotEmpty
-    @Pattern(regexp = "[0-9]{10}", message = "Phone length is 10 and about 0-9")
+    @Pattern(regexp = "\\d{9,11}")
     private String phone;
 
     @NotNull
+    @Pattern(regexp = "dd/mm/yyyy")
     private String birthday;
 
     @NotNull

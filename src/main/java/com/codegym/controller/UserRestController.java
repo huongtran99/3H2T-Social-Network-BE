@@ -153,4 +153,15 @@ public class UserRestController {
         user1.setAvatar(fileName);
         return new ResponseEntity<>(userService.save(user1), HttpStatus.OK);
     }
+
+    @GetMapping("/update-status/{id}")
+    public ResponseEntity<User> updateStatus(@PathVariable Long id) {
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        userOptional.get().setStatus(!userOptional.get().isStatus());
+        userService.save(userOptional.get());
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.CREATED);
+    }
 }
