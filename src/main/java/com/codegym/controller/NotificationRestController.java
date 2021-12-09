@@ -16,7 +16,7 @@ public class NotificationRestController {
 
     @PostMapping
     public ResponseEntity<Notification> addNotification(@RequestBody Notification notification) {
-        return new ResponseEntity<>(notificationService.save(notification), HttpStatus.OK);
+        return new ResponseEntity<>(notificationService.save(notification), HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")

@@ -31,7 +31,7 @@ public class FriendRestController {
         friend.setSender(sender);
         friend.setReceiver(userOptional.get());
         friend.setStatus(false);
-        return new ResponseEntity<>(friendService.save(friend), HttpStatus.OK);
+        return new ResponseEntity<>(friendService.save(friend), HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")

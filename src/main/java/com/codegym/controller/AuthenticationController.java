@@ -65,6 +65,8 @@ public class AuthenticationController {
         roles.add(new Role(2L, "ROLE_USER"));
         user.setRoles(roles);
         user.setStatus(true);
+        user.setAvatar("default-avatar.png");
+        user.setCover("default-cover.png");
         userService.save(user);
         return new ResponseEntity<>(registrationForm, HttpStatus.OK);
     }
