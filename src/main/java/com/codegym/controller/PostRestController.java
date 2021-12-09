@@ -4,7 +4,9 @@ import com.codegym.model.entity.Post;
 import com.codegym.service.post.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,18 @@ public class PostRestController {
     private IPostService postService;
 
     @GetMapping
-    public ResponseEntity<Page<Post>> findAll(@PageableDefault(size = 3) Pageable pageable) {
+    public ResponseEntity<Page<Post>> findAll(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+                                              @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
+                                              @RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort) {
+
+        Sort sortable = null;
+        if (sort.equals("ASC")) {
+            sortable = Sort.by("id").ascending();
+        }
+        if (sort.equals("DESC")) {
+            sortable = Sort.by("id").descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sortable);
         Page<Post> postPage = postService.findAllOrderByDateTime(pageable);
         return new ResponseEntity<>(postPage, HttpStatus.OK);
     }
