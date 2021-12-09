@@ -6,6 +6,9 @@ import com.codegym.model.entity.User;
 import com.codegym.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +39,11 @@ public class UserRestController {
     @GetMapping
     public ResponseEntity<Iterable<User>> showAll() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<Page<User>> showAllAndSearch(@RequestParam("q") Optional<String> search, @PageableDefault(size = 4) Pageable pageable) {
+        return search.map(s -> new ResponseEntity<>(userService.findAllByUsernameContaining(s, pageable), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(userService.findAll(pageable), HttpStatus.OK));
     }
 
     @GetMapping("/role")

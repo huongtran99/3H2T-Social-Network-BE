@@ -2,6 +2,8 @@ package com.codegym.repository;
 
 import com.codegym.model.entity.User;
 import com.codegym.model.querry.IUserChat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +27,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = " call social_network_3h2t.getAllFriendHasRole() ", nativeQuery = true)
     Iterable<User> getAllUserHasRoleUser();
+
+    Page<User> findAllByUsernameContaining(String username, Pageable pageable);
 }
