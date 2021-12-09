@@ -37,28 +37,28 @@ public class WebsocketController {
         return commentService.save(comment);
     }
 
-    @MessageMapping("/comments")
-    @SendTo("/topic/comment")
-    public Comment updateComment(Long id, Comment comment) {
-        comment.setId(id);
-        return commentService.save(comment);
-    }
-
-    @MessageMapping("/comments")
-    @SendTo("/topic/comment")
-    public void deleteComment(Long id) {
-        commentService.remove(id);
-    }
-
-    @MessageMapping("/comments")
-    @SendTo("/topic/comment")
-    public Optional<Comment> findComment(Long id) {
-        return commentService.findById(id);
-    }
-
-    @MessageMapping("/comments")
-    @SendTo("/topic/comment")
-    public Iterable<Comment> getComment() {
-        return commentService.findAll();
-    }
+//    @MessageMapping("/comments")
+//    @SendTo("/topic/comment")
+//    public Comment updateComment(Long id, Comment comment) {
+//        comment.setId(id);
+//        return commentService.save(comment);
+//    }
+//
+//    @MessageMapping("/comments")
+//    @SendTo("/topic/comment")
+//    public void deleteComment(Long id) {
+//        commentService.remove(id);
+//    }
+//
+//    @MessageMapping("/comments")
+//    @SendTo("/topic/comment")
+//    public Optional<Comment> findComment(Long id) {
+//        return commentService.findById(id);
+//    }
+//
+//    @MessageMapping("/comments")
+//    @SendTo("/topic/comment")
+//    public Iterable<Comment> getComment() {
+//        return commentService.findAll();
+//    }
 }
