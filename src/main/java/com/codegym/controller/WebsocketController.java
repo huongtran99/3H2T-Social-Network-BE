@@ -32,7 +32,7 @@ public class WebsocketController {
     }
 
     @MessageMapping("/comments")
-    @SendTo("/topic/comments")
+    @SendTo("/topic/comment")
     public Comment createComment(Comment comment) {
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
