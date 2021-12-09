@@ -175,4 +175,12 @@ public class UserRestController {
         userService.save(userOptional.get());
         return new ResponseEntity<>(userOptional.get(), HttpStatus.CREATED);
     }
+
+    @GetMapping("/get-status")
+    public ResponseEntity<Boolean> getStatusByUsername(@RequestParam String username) {
+        if (username == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userService.getStatusByUsername(username), HttpStatus.OK);
+    }
 }

@@ -7,6 +7,8 @@ import com.codegym.service.IGeneralService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.Optional;
+
 public interface IUserService extends IGeneralService<User>, UserDetailsService {
     User findByUsername(String username);
 
@@ -17,4 +19,6 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
     Iterable<IUserChat> getAllUserHasRoleUser();
 
     IUserChat getUserChatInfo(Long id);
+
+    Boolean getStatusByUsername(String username);
 }

@@ -69,6 +69,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Boolean getStatusByUsername(String username) {
+        return userRepository.getStatusByUsername(username);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);

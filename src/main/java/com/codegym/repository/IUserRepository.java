@@ -2,9 +2,12 @@ package com.codegym.repository;
 
 import com.codegym.model.entity.User;
 import com.codegym.model.querry.IUserChat;
+import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
@@ -25,4 +28,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = " call social_network_3h2t.getAllFriendHasRole() ", nativeQuery = true)
     Iterable<User> getAllUserHasRoleUser();
+
+    @Query(value = "select status from user where username = ?", nativeQuery = true)
+    Boolean getStatusByUsername(String username);
 }

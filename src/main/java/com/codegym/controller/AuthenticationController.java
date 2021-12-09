@@ -49,6 +49,9 @@ public class AuthenticationController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.findByUsername(loginForm.getUsername());
+        if (!currentUser.isStatus()) {
+            return new ResponseEntity<>("Your account has been locked", HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getEmail(), userDetails.getAuthorities()));
     }
 
