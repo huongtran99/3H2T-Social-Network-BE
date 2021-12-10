@@ -2,12 +2,11 @@ package com.codegym.repository;
 
 import com.codegym.model.entity.User;
 import com.codegym.model.querry.IUserChat;
-import jdk.nashorn.internal.runtime.options.Option;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
@@ -31,4 +30,6 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select status from user where username = ?", nativeQuery = true)
     Boolean getStatusByUsername(String username);
+
+    Page<User> findAllByUsernameContaining(String username, Pageable pageable);
 }

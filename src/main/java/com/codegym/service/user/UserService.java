@@ -5,6 +5,8 @@ import com.codegym.model.entity.User;
 import com.codegym.model.querry.IUserChat;
 import com.codegym.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -71,6 +73,16 @@ public class UserService implements IUserService {
     @Override
     public Boolean getStatusByUsername(String username) {
         return userRepository.getStatusByUsername(username);
+    }
+
+    @Override
+    public Page<User> findAllByUsernameContaining(String username, Pageable pageable) {
+        return userRepository.findAllByUsernameContaining(username, pageable);
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override

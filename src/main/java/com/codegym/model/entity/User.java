@@ -27,10 +27,10 @@ public class User {
 
     private String gender;
 
-    @Column(columnDefinition = "varchar(255) default '/images/default-avatar.png'")
+    @Column(columnDefinition = "varchar(255) default 'default-avatar.png'")
     private String avatar;
 
-    @Column(columnDefinition = "varchar(255) default '/images/default-cover.png'")
+    @Column(columnDefinition = "varchar(255) default 'default-cover.png'")
     private String cover;
 
     @Column(columnDefinition = "boolean default true")
